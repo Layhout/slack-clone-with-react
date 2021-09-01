@@ -15,9 +15,11 @@ import AddIcon from "@material-ui/icons/Add"
 import { useEffect, useState } from "react"
 import { collection, onSnapshot } from "firebase/firestore"
 import { db } from "../firebase"
+import { useSelector } from "react-redux"
 
 const Sidebar = () => {
     const [chatRooms, setChatRooms] = useState([]);
+    const user = useSelector(state => state.user);
 
     useEffect(() => {
         onSnapshot(collection(db, "chatRooms"), snap => {
@@ -32,7 +34,7 @@ const Sidebar = () => {
                     <h2>Chat App Test</h2>
                     <h3>
                         <FiberManualRecordIcon />
-                        Uzumaki Naruto
+                        {user.displayName}
                     </h3>
                 </SidebarInfo>
                 <CreateIcon />

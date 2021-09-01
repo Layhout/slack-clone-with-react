@@ -3,12 +3,18 @@ import { Avatar } from "@material-ui/core";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import SearchIcon from "@material-ui/icons/Search";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 const Header = () => {
+    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
+
     return (
         <HeaderContainer>
             <HeaderLeft>
-                <HeaderAvatar />
+                <HeaderAvatar src={user.photoURL} onClick={() => { signOut(auth); dispatch({ type: "LOG_USER_OUT" }) }} />
                 <AccessTimeIcon />
             </HeaderLeft>
             <HeaderSearch>
@@ -69,6 +75,7 @@ const HeaderSearch = styled.div`
         min-width: 30vw;
         outline: 0;
         color: white;
+        flex: 1;
     }
 `;
 
